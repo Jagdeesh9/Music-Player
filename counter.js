@@ -1,12 +1,20 @@
 let progress = document.getElementById('progress');
 let song = document.getElementById('song');
 let ctr = document.getElementById('ctr');
-
-console.log(progress);
-
+let duration = document.querySelector('#duration');
+let num;
+let minutes;
+let seconds;
 song.onloadedmetadata=()=>{
   console.log(song.duration);
   console.log(song.currentTime);
+  num = song.duration;
+  minutes = Math.floor(num / 60);
+  seconds = Math.floor(num % 60);
+
+  console.log(minutes)
+  console.log(seconds)
+  duration.innerText = minutes+":"+seconds;
 
   progress.max = song.duration;
   progress.value = song.currentTime;
@@ -25,13 +33,18 @@ const playPause = ()=>{
 }
 
 if(song.play()){
+
   setInterval(()=>{
+  duration.innerText = minutes+":"+seconds;
     progress.value = song.currentTime;
-  },500)
+    seconds--;
+
+  },1000)
 }
 
 progress.addEventListener("change",()=>{
   console.log("hello");
   
   song.currentTime = progress.value;
+
 })
